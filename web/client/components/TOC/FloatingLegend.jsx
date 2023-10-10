@@ -192,31 +192,31 @@ class FloatingLegend extends React.Component {
                                         style: {
                                             opacity: layer.visibility ? 1 : 0.4
                                         },
-                                        body: !layer.visibility ? null
-                                            : (
-                                                <div>
-                                                    <Grid fluid>
-                                                        <Row>
-                                                            <Col xs={12} className="ms-legend-container">
-                                                                <WMSLegend
-                                                                    node={{...layer}}
-                                                                    currentZoomLvl={this.props.currentZoomLvl}
-                                                                    scales={this.props.scales}
-                                                                    {...this.props.legendProps}/>
-                                                            </Col>
-                                                        </Row>
-                                                    </Grid>
-                                                    {!this.props.disableOpacitySlider &&
-                                                        <OpacitySlider
-                                                            opacity={layer.opacity}
-                                                            disabled={!layer.visibility}
-                                                            hideTooltip={this.props.hideOpacityTooltip}
-                                                            onChange={opacity => this.props.onChange(layer.id, 'layers', {opacity})}/>
-                                                    }
-                                                </div>
-                                            )
-                                    })
-                                    )}/>
+                                        body: (
+                                            <div>
+                                                <Grid fluid>
+                                                    <Row>
+                                                        <Col xs={12} className="ms-legend-container">
+                                                            <WMSLegend
+                                                                node={{...layer}}
+                                                                currentZoomLvl={this.props.currentZoomLvl}
+                                                                scales={this.props.scales}
+                                                                {...this.props.legendProps}/>
+                                                        </Col>
+                                                    </Row>
+                                                </Grid>
+                                                {!this.props.disableOpacitySlider &&
+                                                    <OpacitySlider
+                                                        opacity={layer.opacity}
+                                                        disabled={!layer.visibility}
+                                                        hideTooltip={this.props.hideOpacityTooltip}
+                                                        onChange={opacity => this.props.onChange(layer.id, 'layers', {opacity})}/>
+                                                }
+                                            </div>
+                                        )
+                                    }))
+                                }
+                            />
                             </Panel>
                         </Resizable>
                     }
