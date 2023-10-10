@@ -13,9 +13,12 @@ const DEFAULT_URL = 'nominatim.openstreetmap.org';
 const DEFAULT_REVERSE_URL = 'nominatim.openstreetmap.org/reverse';
 const defaultOptions = {
     format: 'json',
-    bounded: 0,
+    bounded: 1,
     polygon_geojson: 1,
-    priority: 5
+    priority: 5,
+    countrycodes: 'uy',
+   	viewbox: '-56.452,-34.688,-56.009,-34.939',
+    limit: 15
 };
 /**
  * API for local config
