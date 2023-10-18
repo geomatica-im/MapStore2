@@ -40,7 +40,7 @@ export default createPlugin('HelpLink', {
             icon: <Glyphicon glyph="question-sign"/>,
             action: () => ({type: ''}),
             selector: (state, ownProps) => {
-                const docsUrl = get(ownProps, 'docsUrl', 'https://mapstore.readthedocs.io/en/latest/');
+                const docsUrl = get(ownProps, 'docsUrl', 'https://sig.montevideo.gub.uy/acerca.html');
                 return {href: docsUrl, target: 'blank'};
             },
             priority: 2,
@@ -54,7 +54,7 @@ export default createPlugin('HelpLink', {
             icon: <Glyphicon glyph="question-sign"/>,
             action: () => ({type: ''}),
             selector: (state, ownProps) => {
-                const docsUrl = get(ownProps, 'docsUrl', 'https://mapstore.readthedocs.io/en/latest/');
+                const docsUrl = get(ownProps, 'docsUrl', 'https://sig.montevideo.gub.uy/acerca.html');
                 return { href: docsUrl, target: 'blank'};
             },
             priority: 1,
