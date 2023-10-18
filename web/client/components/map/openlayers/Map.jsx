@@ -8,6 +8,9 @@
 
 import { defaults, DragPan, MouseWheelZoom } from 'ol/interaction';
 import { defaults as defaultControls } from 'ol/control';
+import OverviewMap from 'ol/control/OverviewMap';
+import OSM from 'ol/source/OSM.js';
+import TileLayer from 'ol/layer/Tile.js';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import { get as getProjection, toLonLat } from 'ol/proj';
@@ -33,6 +36,7 @@ import 'ol/ol.css';
 
 // add overrides for css
 import './mapstore-ol-overrides.css';
+import { proj } from 'proj4';
 
 const geoJSONFormat = new GeoJSON();
 
@@ -144,6 +148,28 @@ class OpenlayersMap extends React.Component {
                 this.mouseWheelInteraction
             ]);
         }
+
+        let view = this.createView(center, Math.round(this.props.zoom), this.props.projection, this.props.mapOptions && this.props.mapOptions.view, this.props.limits);
+        
+        const overviewMapControl = new OverviewMap({
+            layers: [
+                new TileLayer({
+                    source: new OSM()
+                })
+            ],
+            view: new View({
+                center: [view.options_.center[1], view.options_.center[0]],
+                projection: view.options_.projection,
+                minZoom: 7
+                /* maxZoom: Math.round(this.props.zoom * 0.7),
+                minZoom: Math.round(this.props.zoom * 0.7),
+                zoom: Math.round(this.props.zoom * 0.7) */
+            }),
+            collapseLabel: '\u00BB',
+            label: '\u00AB',
+            collapsed: false
+        });
+
         let controls = defaultControls(assign({
             zoom: this.props.zoomControl,
             attributionOptions: assign({
@@ -151,7 +177,7 @@ class OpenlayersMap extends React.Component {
             }, this.props.mapOptions.attribution && this.props.mapOptions.attribution.container ? {
                 target: this.getDocument().querySelector(this.props.mapOptions.attribution.container)
             } : {})
-        }, this.props.mapOptions.controls));
+        }, this.props.mapOptions.controls)).extend([overviewMapControl]);
 
         let map = new Map({
             layers: [],
@@ -159,7 +185,7 @@ class OpenlayersMap extends React.Component {
             interactions: interactions,
             maxTilesLoading: Infinity,
             target: this.getDocument().getElementById(this.props.id) || `${this.props.id}`,
-            view: this.createView(center, Math.round(this.props.zoom), this.props.projection, this.props.mapOptions && this.props.mapOptions.view, this.props.limits)
+            view: view
         });
 
         this.map = map;
@@ -313,6 +339,31 @@ class OpenlayersMap extends React.Component {
                 ], 'EPSG:4326', mapProjection);
                 this.map.setView(this.createView(center, newProps.zoom, newProps.projection, newProps.mapOptions && newProps.mapOptions.view, newProps.limits));
                 this.props.onResolutionsChange(this.getResolutions());
+                let map = this.map;
+                this.map.getControls().forEach(function(control) {
+                    if (control instanceof OverviewMap) {
+                      map.removeControl(control);
+                    }
+                  }, this);
+                this.map.addControl(new OverviewMap({
+                    layers: [
+                        new TileLayer({
+                            source: new OSM()
+                        })
+                    ],
+                    view: new View({
+                        center: center,
+                        projection: mapProjection,
+                        minZoom: 7
+                        /* maxZoom: Math.round(newProps.zoom * 0.7),
+                        minZoom: Math.round(newProps.zoom * 0.7),
+                        zoom: Math.round(newProps.zoom * 0.7) */
+                    }),
+                    collapseLabel: '\u00BB',
+                    label: '\u00AB',
+                    collapsed: false,
+                    controls: defaultControls()
+                }));
             }
             // We have to force ol to drop tile and reload
             this.map.getLayers().forEach((l) => {
