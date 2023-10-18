@@ -192,7 +192,8 @@ class FloatingLegend extends React.Component {
                                         style: {
                                             opacity: layer.visibility ? 1 : 0.4
                                         },
-                                        body: (
+                                        body: !layer.visibility ? null
+                                            :(
                                             <div>
                                                 <Grid fluid>
                                                     <Row>
