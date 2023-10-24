@@ -184,7 +184,7 @@ class FloatingLegend extends React.Component {
                                 <SideGrid
                                     ref={list => { this.list = list; }}
                                     size="sm"
-                                    items={this.props.layers.map(layer => ({
+                                    items={this.props.layers.filter(layer => layer.visibility && layer.type != 'wfs').map(layer => ({
                                         title: !layer.title || layer.title === '' ? layer.name : layer.title,
                                         preview: <Glyphicon className="text-primary"
                                             glyph={layer.visibility ? 'eye-open' : 'eye-close'}
@@ -192,8 +192,7 @@ class FloatingLegend extends React.Component {
                                         style: {
                                             opacity: layer.visibility ? 1 : 0.4
                                         },
-                                        body: !layer.visibility ? null
-                                            :(
+                                        body: (
                                             <div>
                                                 <Grid fluid>
                                                     <Row>
