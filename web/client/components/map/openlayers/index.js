@@ -1,6 +1,6 @@
 import FeatureComp from './Feature';
 import LLayerComp from './Layer.jsx';
-import LMapComp from '@js/plugins/Map.jsx';
+import LMapComp from './Map.jsx';
 import MeasurementSupportComp from './MeasurementSupport';
 import OverviewComp from './Overview';
 import ScaleBarComp from './ScaleBar';

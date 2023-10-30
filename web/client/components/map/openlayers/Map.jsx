@@ -150,7 +150,7 @@ class OpenlayersMap extends React.Component {
         }
 
         let view = this.createView(center, Math.round(this.props.zoom), this.props.projection, this.props.mapOptions && this.props.mapOptions.view, this.props.limits);
-        
+
         const overviewMapControl = new OverviewMap({
             layers: [
                 new TileLayer({
@@ -158,8 +158,8 @@ class OpenlayersMap extends React.Component {
                 })
             ],
             view: new View({
-                center: [view.options_.center[1], view.options_.center[0]],
-                projection: view.options_.projection,
+                center: view.getCenter(),
+                projection: view.values_.projection,
                 minZoom: 7
                 /* maxZoom: Math.round(this.props.zoom * 0.7),
                 minZoom: Math.round(this.props.zoom * 0.7),
@@ -352,18 +352,18 @@ class OpenlayersMap extends React.Component {
                         })
                     ],
                     view: new View({
-                        center: center,
+                        center: [center.x, center.y],
                         projection: mapProjection,
                         minZoom: 7
                         /* maxZoom: Math.round(newProps.zoom * 0.7),
                         minZoom: Math.round(newProps.zoom * 0.7),
-                        zoom: Math.round(newProps.zoom * 0.7) */
+                        zoom: Math.round(newProps.zoom * 0.7)*/
                     }),
                     collapseLabel: '\u00BB',
                     label: '\u00AB',
                     collapsed: false,
                     controls: defaultControls()
-                }));
+                })); 
             }
             // We have to force ol to drop tile and reload
             this.map.getLayers().forEach((l) => {
