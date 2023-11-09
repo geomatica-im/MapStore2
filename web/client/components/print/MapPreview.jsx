@@ -152,7 +152,7 @@ class MapPreview extends React.Component {
                 interactive={false}
                 onMapViewChanges={this.props.onMapViewChanges}
                 zoomControl={false}
-                zoom={this.props.useFixedScales && this.props.scales ? getMapZoom(this.props.map.scaleZoom, this.props.scales) : this.props.map.zoom}
+                zoom={(this.props.useFixedScales && this.props.scales ? getMapZoom(this.props.map.zoom, this.props.scales) : this.props.map.zoom)*0.75}
                 center={this.props.map.center}
                 id="print_preview"
                 registerHooks={false}
