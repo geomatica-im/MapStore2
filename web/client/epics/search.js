@@ -45,6 +45,8 @@ import {
     ZOOM_ADD_POINT
 } from '../actions/search';
 
+import { REDO_SEARCH_CLEAN_INPUT } from '@js/actions/SearchHistoryActions';
+
 import CoordinatesUtils, { reproject } from '../utils/CoordinatesUtils';
 import {defaultIconStyle, layerIsVisibleForGFI, showGFIForService} from '../utils/SearchUtils';
 import {generateTemplateString} from '../utils/TemplateUtils';
@@ -123,7 +125,7 @@ export const searchEpic = action$ =>
  */
 
 export const searchItemSelected = (action$, store) =>
-    action$.ofType(TEXT_SEARCH_ITEM_SELECTED)
+    action$.ofType(TEXT_SEARCH_ITEM_SELECTED, REDO_SEARCH_CLEAN_INPUT)
         .switchMap(action => {
             // itemSelectionStream --> emits actions for zoom and marker add
             let itemSelectionStream = Rx.Observable.of(action.item)
