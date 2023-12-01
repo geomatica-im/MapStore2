@@ -25,6 +25,8 @@ import {
     HIDE_MARKER
 } from '../actions/search';
 
+import { TEXT_SEARCH_UNSELECT_NESTED_SERVICE } from '@js/actions/SearchHistoryActions';
+
 import { RESET_CONTROLS } from '../actions/controls';
 import { generateTemplateString } from '../utils/TemplateUtils';
 import assign from 'object-assign';
@@ -127,6 +129,10 @@ function search(state = null, action) {
             searchText: action.searchText,
             selectedItems: (state.selectedItems || []).concat(action.items)
         });
+    case TEXT_SEARCH_UNSELECT_NESTED_SERVICE:
+        delete state.selectedItems;
+        delete state.selectedServices;
+        return { ...state, searchText: "" };
     case TEXT_SEARCH_CANCEL_ITEM:
         return state ? assign({}, {
             selectedItems: state.selectedItems && state.selectedItems.filter(item => item !== action.item),
