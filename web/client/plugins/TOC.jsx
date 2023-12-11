@@ -354,6 +354,10 @@ class LayerTree extends React.Component {
         return group.name !== 'background';
     };
 
+    getValidGroupNames = (group) => {
+        return group?.nodes.length > 0;
+    }
+
     getDefaultGroup = () => {
         const GroupNode = this.props.groupNodeComponent || DefaultGroup;
         return (
@@ -524,7 +528,7 @@ class LayerTree extends React.Component {
                             <div className="toc-filter-no-results"><Message msgId="toc.noFilteredResults" /></div>
                         </div>
                         :
-                        <TOC onError={this.props.onError} onSort={!this.props.filterText && this.props.activateSortLayer ? this.props.onSort : null} filter={this.getNoBackgroundLayers} nodes={this.props.filteredGroups}>
+                        <TOC onError={this.props.onError} onSort={!this.props.filterText && this.props.activateSortLayer ? this.props.onSort : null} filter={this.getNoBackgroundLayers || this.getValidGroupNames} nodes={this.props.filteredGroups}>
                             <DefaultLayerOrGroup groupElement={Group} layerElement={Layer}/>
                         </TOC>
                     }

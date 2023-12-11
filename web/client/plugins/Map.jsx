@@ -392,7 +392,7 @@ class MapPlugin extends React.Component {
                         featuresCrs={ layer.featuresCrs || 'EPSG:4326' }
                         // FEATURE STYLE OVERWRITE LAYER STYLE
                         layerStyle={layer.style}
-                        style={ feature.style || layer.style || null }
+                        style={ Array.isArray(feature.style) ? feature.style[0] : feature.style || layer.style || null }
                         properties={feature.properties}/>
                 );
             });

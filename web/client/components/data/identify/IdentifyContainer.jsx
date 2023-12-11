@@ -105,7 +105,7 @@ export default props => {
             url: get(layer, 'search.url')
         })
     });
-    const emptyResponses = requests.length === validator(format)?.getNoValidResponses(responses)?.length || 0;
+    const emptyResponses = requests.length === validator(format)?.getNoValidResponses(responses)?.length;
     const missingResponses = requests.length - responses.length;
     const revGeocodeDisplayName = reverseGeocodeData.error ? <Message msgId="identifyRevGeocodeError"/> : reverseGeocodeData.display_name;
     return (
