@@ -154,6 +154,15 @@ export const searchItemSelected = (action$, store) =>
                         if (coord) {
                             const state = store.getState();
                             const layerObj = typeName && getLayerFromName(state, typeName);
+                            /* const cql_attributes_filter = item.__SERVICE__.options.queriableAttributes.map((elem) => {
+                                const value = item.properties[elem];
+                                return `${elem} = ${(typeof value === "string") ? `${value}` : value}`;
+                            }); */
+                            const valueGID = item.properties['GID'] ? 'GID' : 'gid';
+                            const itemGID = item.properties[valueGID];
+                            const cql_filter_string = '(' + valueGID + ' = ' + itemGID + ')';
+                            console.log(cql_filter_string);
+                            // const layerStyle = item['searchStyle'];
                             let itemId = null;
                             let filterNameList = [];
                             let overrideParams = {};
@@ -163,6 +172,7 @@ export const searchItemSelected = (action$, store) =>
                                  * and filtering with `featureid` which might be ignored by other servers,
                                  * but can be used by GeoServer to select the specific feature instead to showing all the results
                                  * when info_format is other than application/json */
+                                console.log(item);
                                 forceVisibility = item.__SERVICE__.forceSearchLayerVisibility;
                                 filterNameList = [typeName];
                                 itemId = item.id;
@@ -171,8 +181,8 @@ export const searchItemSelected = (action$, store) =>
                                         info_format: getInfoFormat(layerObj, state),
                                         ...(itemId
                                             ? {
-                                                featureid: itemId,
-                                                CQL_FILTER: undefined
+                                                /* featureid: itemId, */
+                                                CQL_FILTER: cql_filter_string
                                             }
                                             : {}
                                         )
