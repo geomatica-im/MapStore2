@@ -157,7 +157,8 @@ export const searchItemSelected = (action$, store) =>
                             let itemId = null;
                             let filterNameList = [];
                             let overrideParams = {};
-                            const layerStyle = item.__SERVICE__.searchStyle;
+                            const layerStyle = item.__SERVICE__.searchStyle || item.__SERVICE__.options.searchStyle;
+                            console.log(item);
                             let forceVisibility = false;
                             if (item.__SERVICE__.launchInfoPanel === "single_layer") {
                                 /* take info from the item selected and restrict feature info to this layer

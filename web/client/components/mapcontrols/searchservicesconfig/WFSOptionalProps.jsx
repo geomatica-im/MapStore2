@@ -37,6 +37,16 @@ class WFSOptionalProps extends React.Component {
                 <span className="wfs-required-props-title"><Message msgId="search.s_wfs_opt_props_label" /></span>
                 <FormGroup>
                     <ControlLabel>
+                        <Message msgId="search.s_searchStyle" />
+                    </ControlLabel>
+                    <FormControl
+                        value={options.searchStyle}
+                        key="searchStyle"
+                        type="text"
+                        onChange={this.updateProp.bind(null, "searchStyle")}/>
+                </FormGroup>
+                <FormGroup>
+                    <ControlLabel>
                         <Message msgId="search.s_sort" />
                     </ControlLabel>
                     <FormControl
@@ -65,6 +75,7 @@ class WFSOptionalProps extends React.Component {
                     />
                     <Label key="maxZoomLevel-label" className="slider-label" >{options.maxZoomLevel || 21}</Label>
                 </FormGroup>
+
             </form>);
     }
 
