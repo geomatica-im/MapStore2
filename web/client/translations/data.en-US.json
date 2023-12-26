@@ -857,6 +857,7 @@
             "s_url": "Service url",
             "s_layer": "Layer",
             "s_attributes": "Attributes",
+            "s_searchStyle": "Search style",
             "s_sort": "Sort by",
             "s_max_features": "Max features",
             "s_max_zoom": "Max zoom level",
