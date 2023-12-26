@@ -857,6 +857,7 @@
             "s_url": "Url del servicio",
             "s_layer": "Capa",
             "s_attributes": "Atributos",
+            "s_searchStyle": "Estilo de búsqueda",
             "s_sort": "Ordenado por",
             "s_max_features": "Máximo de características",
             "s_max_zoom": "Nivel máximo de zoom",
