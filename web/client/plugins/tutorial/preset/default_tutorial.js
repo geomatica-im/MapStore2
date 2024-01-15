@@ -50,6 +50,16 @@ export default [
         position: 'top'
     },
     {
+        translation: 'googleEarth', 
+        selector: '#mapstore-sidebar-menu .glyphicon.glyphicon-globe',
+        position: 'top'
+    },
+    {
+        translation: 'searchHistory', 
+        selector: '#mapstore-sidebar-menu .glyphicon.glyphicon-list',
+        position: 'top'
+    },
+    {
         translation: 'burgerMenu',
         selector: '#mapstore-burger-menu'
     },
