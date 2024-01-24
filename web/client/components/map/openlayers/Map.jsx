@@ -177,7 +177,11 @@ class OpenlayersMap extends React.Component {
             }, this.props.mapOptions.attribution && this.props.mapOptions.attribution.container ? {
                 target: this.getDocument().querySelector(this.props.mapOptions.attribution.container)
             } : {})
-        }, this.props.mapOptions.controls)).extend([overviewMapControl]);
+        }, this.props.mapOptions.controls));
+
+        if (this.props?.id == 'map') {
+            controls.extend([overviewMapControl]);
+        }
 
         let map = new Map({
             layers: [],
