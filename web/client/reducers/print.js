@@ -79,7 +79,6 @@ function print(state = {spec: initialSpec, capabilities: null, map: null, isLoad
         return state;
     }
     case CONFIGURE_PRINT_MAP: {
-
         const layers = action.layers.map((layer) => {
             return layer.title ? assign({}, layer, {
                 title: isObject(layer.title) && action.currentLocale && layer.title[action.currentLocale]
@@ -87,7 +86,6 @@ function print(state = {spec: initialSpec, capabilities: null, map: null, isLoad
                 || layer.title
             }) : layer;
         });
-
         return assign({}, state, {
             map: {
                 center: action.center,
@@ -95,8 +93,9 @@ function print(state = {spec: initialSpec, capabilities: null, map: null, isLoad
                 scaleZoom: action.scaleZoom,
                 scale: action.scale,
                 layers,
-                size: action.size ?? state.map?.size,
-                projection: action.projection
+                size: action.size ?? state.map?.present?.size,
+                projection: action.projection,
+                bbox: action.bbox
             },
             error: null
         }

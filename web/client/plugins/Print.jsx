@@ -289,7 +289,8 @@ export default {
                         overrideOptions: PropTypes.object,
                         items: PropTypes.array,
                         addPrintParameter: PropTypes.func,
-                        printingService: PropTypes.object
+                        printingService: PropTypes.object,
+                        bbox: PropTypes.array
                     };
 
                     static contextTypes = {
@@ -340,7 +341,8 @@ export default {
                         currentLocale: 'en-US',
                         overrideOptions: {},
                         items: [],
-                        printingService: getDefaultPrintingService()
+                        printingService: getDefaultPrintingService(),
+                        bbox: []
                     };
 
                     state = {
@@ -348,7 +350,7 @@ export default {
                     }
 
                     UNSAFE_componentWillMount() {
-                        this.configurePrintMap();
+                        this.configurePrintMap({...this.props, bbox: this.props.map?.bbox});
                     }
 
                     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -359,7 +361,7 @@ export default {
                                 nextProps.printSpec.additionalLayers !== this.props.printSpec.additionalLayers
                         );
                         if (hasBeenOpened || mapHasChanged || specHasChanged) {
-                            this.configurePrintMap(nextProps);
+                            this.configurePrintMap({...nextProps, bbox: this.props.map?.bbox});
                         }
                     }
 
@@ -587,16 +589,16 @@ export default {
                             ], newMap.bbox.crs, newMap.projection);
                             const mapSize = this.getMapSize();
                             if (useFixedScales) {
-                                const mapZoom = getZoomForExtent(bbox, mapSize, minZoom, maxZoom);
+                                const mapZoom = getZoomForExtent(newMap.bbox, mapSize, minZoom, maxZoom);
                                 const scales = getPrintScales(capabilities);
                                 const scaleZoom = getNearestZoom(newMap.zoom, scales);
                                 const scale = scales[scaleZoom];
                                 configurePrintMapProp(newMap.center, mapZoom, scaleZoom, scale,
-                                    layers, newMap.projection, currentLocale);
+                                    layers, newMap.projection, currentLocale, newMap.bbox);
                             } else {
                                 const scale = scalesProp[newMap.zoom];
                                 configurePrintMapProp(newMap.center, newMap.zoom, newMap.zoom, scale,
-                                    layers, newMap.projection, currentLocale);
+                                    layers, newMap.projection, currentLocale, newMap.bbox);
                             }
                         }
                     };

@@ -6,7 +6,7 @@ import Message from "../../components/I18N/Message";
 
 export const MapPreview = ({mapSize, layout, layoutName, resolutions, useFixedScales,
     localizedLayerStylesEnv, mapPreviewOptions, mapType,
-    map, capabilities, onRefresh, validation = {valid: true}, ...rest}) => {
+    map, capabilities, onRefresh, bbox, validation = {valid: true}, ...rest}) => {
     const scales = capabilities.scales.slice(0).reverse().map((scale) => parseFloat(scale.value)) || [];
     return validation.valid ? (
         <MapPreviewComp
@@ -21,6 +21,7 @@ export const MapPreview = ({mapSize, layout, layoutName, resolutions, useFixedSc
             resolutions={resolutions}
             useFixedScales={useFixedScales}
             env={localizedLayerStylesEnv}
+            bbox={bbox}
             {...mapPreviewOptions}
         />
     ) : <div id="map-preview-disabled-message"><Message msgId="print.disabledpreview"/></div>;
