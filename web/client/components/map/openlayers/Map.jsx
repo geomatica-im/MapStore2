@@ -344,30 +344,33 @@ class OpenlayersMap extends React.Component {
                 this.map.setView(this.createView(center, newProps.zoom, newProps.projection, newProps.mapOptions && newProps.mapOptions.view, newProps.limits));
                 this.props.onResolutionsChange(this.getResolutions());
                 let map = this.map;
-                this.map.getControls().forEach(function(control) {
-                    if (control instanceof OverviewMap) {
-                      map.removeControl(control);
-                    }
-                  }, this);
-                this.map.addControl(new OverviewMap({
-                    layers: [
-                        new TileLayer({
-                            source: new OSM()
-                        })
-                    ],
-                    view: new View({
-                        center: [center.x, center.y],
-                        projection: mapProjection,
-                        minZoom: 7
-                        /* maxZoom: Math.round(newProps.zoom * 0.7),
-                        minZoom: Math.round(newProps.zoom * 0.7),
-                        zoom: Math.round(newProps.zoom * 0.7)*/
-                    }),
-                    collapseLabel: '\u00BB',
-                    label: '\u00AB',
-                    collapsed: false,
-                    controls: defaultControls()
-                })); 
+                
+               if (this.props?.id == 'map') {
+                    this.map.getControls().forEach(function(control) {
+                        if (control instanceof OverviewMap) {
+                          map.removeControl(control);
+                        }
+                      }, this);
+                    this.map.addControl(new OverviewMap({
+                        layers: [
+                            new TileLayer({
+                                source: new OSM()
+                            })
+                        ],
+                        view: new View({
+                            center: [center.x, center.y],
+                            projection: mapProjection,
+                            minZoom: 7
+                            /* maxZoom: Math.round(newProps.zoom * 0.7),
+                            minZoom: Math.round(newProps.zoom * 0.7),
+                            zoom: Math.round(newProps.zoom * 0.7)*/
+                        }),
+                        collapseLabel: '\u00BB',
+                        label: '\u00AB',
+                        collapsed: false,
+                        controls: defaultControls()
+                    })); 
+                }
             }
             // We have to force ol to drop tile and reload
             this.map.getLayers().forEach((l) => {
