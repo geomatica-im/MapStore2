@@ -592,7 +592,7 @@ export default {
                                 const mapZoom = getZoomForExtent(newMap.bbox, mapSize, minZoom, maxZoom);
                                 const scales = getPrintScales(capabilities);
                                 const scaleZoom = getNearestZoom(newMap.zoom, scales);
-                                const scale = scales[scaleZoom];
+                                const scale = scalesProp[scaleZoom];
                                 configurePrintMapProp(newMap.center, mapZoom, scaleZoom, scale,
                                     layers, newMap.projection, currentLocale, newMap.bbox);
                             } else {

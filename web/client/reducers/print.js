@@ -113,9 +113,15 @@ function print(state = {spec: initialSpec, capabilities: null, map: null, isLoad
         );
     }
     case CHANGE_MAP_PRINT_PREVIEW: {
+        const diff = action.zoom - state.map.scaleZoom;
+        const dif = Math.abs(diff);
+        const zoomi = action.zoom + dif;
+        console.log(diff);
         return assign({}, state, {
             map: assign({}, state.map, {
-                size: action.size
+                size: action.size,
+                zoom: zoomi,
+                scaleZoom: action.zoom
             })
         }
         );
