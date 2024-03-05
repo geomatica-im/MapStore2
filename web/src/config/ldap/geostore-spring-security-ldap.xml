@@ -53,9 +53,12 @@
 
     <!-- LDAP Provider configuration -->
 	<bean id="contextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
-		<constructor-arg value="ldap://${ldap.host}:${ldap.port}/${ldap.root}" />
-        <property name="userDn" value="${ldap.userDn}"/>
-        <property name="password" value="${ldap.password}"/>
+		<!-- <constructor-arg value="ldap://${ldap.host}:${ldap.port}/${ldap.root}" /> -->
+		<constructor-arg value="ldap://ldapd01.imm.gub.uy:389/dc=imm,dc=gub,dc=uy" />
+        <!-- <property name="userDn" value="${ldap.userDn}"/> -->
+		<property name="userDn" value="cn=ldapgeoserver,ou=usuarios,dc=imm,dc=gub,dc=uy"/>
+        <!-- <property name="password" value="${ldap.password}"/> -->
+		<property name="password" value="ldapg30server"/>
 	</bean>
 
     <bean id="ldapInitializer" class="it.geosolutions.geostore.init.LDAPInit" lazy-init="false">
@@ -71,8 +74,10 @@
 				<property name="userSearch">
 					<bean id="userSearch"
 						class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
-						<constructor-arg index="0" value="${ldap.userBase}" />
-						<constructor-arg index="1" value="${ldap.userFilter}" />
+						<!-- <constructor-arg index="0" value="${ldap.userBase}" /> -->
+						<constructor-arg index="0" value="ou=people" />
+						<!-- <constructor-arg index="1" value="${ldap.userFilter}" /> -->
+						<constructor-arg index="1" value="(member=cn={0},ou=usuarios,dc=imm,dc=gub,dc=uy)" />
 						<constructor-arg index="2" ref="contextSource" />
 					</bean>
 				</property>
@@ -83,23 +88,32 @@
 				class="it.geosolutions.geostore.services.rest.security.GeoStoreLdapAuthoritiesPopulator">
 				<constructor-arg ref="contextSource" />
 				<!-- groupSearchBase -->
-				<constructor-arg value="${ldap.groupBase}" />
+				<!-- <constructor-arg value="${ldap.groupBase}" /> -->
+				<constructor-arg value="ou=workspace,ou=Geoserver,ou=grupos" />
 				<!-- roleSearchBase -->
-				<constructor-arg value="${ldap.roleBase}" />
+				<!-- <constructor-arg value="${ldap.roleBase}" />
 				<property name="groupSearchFilter" value="${ldap.groupFilter}" />
-				<property name="roleSearchFilter" value="${ldap.roleFilter}" />
+				<property name="roleSearchFilter" value="${ldap.roleFilter}" /> -->
+				<constructor-arg value="ou=groups" />
+				<property name="groupSearchFilter" value="(member={0})" />
+				<property name="roleSearchFilter" value="(member={0})" />
 
 				<!-- nested groups support -->
-				<property name="enableHierarchicalGroups" value="${ldap.hierachicalGroups}" />
+				<!-- <property name="enableHierarchicalGroups" value="${ldap.hierachicalGroups}" />
 				<property name="groupInGroupSearchFilter" value="${ldap.nestedGroupFilter}" />
-				<property name="maxLevelGroupsSearch" value="${ldap.nestedGroupLevels}" />
+				<property name="maxLevelGroupsSearch" value="${ldap.nestedGroupLevels}" /> -->
+				<property name="enableHierarchicalGroups" value="true" />
+				<property name="groupInGroupSearchFilter" value="(member={1})" />
+				<property name="maxLevelGroupsSearch" value="10" />
 				<!-- the GeoStore convention is:
 				  * Groups starting with 'ROLE_' will be threated as Auth Roles
 				  * Groups starting withOUT 'ROLE_' will be threated as Groups
 				 -->
 				<property name="rolePrefix" value="ROLE_" />
-				<property name="searchSubtree" value="${ldap.searchSubtree}" />
-				<property name="convertToUpperCase" value="${ldap.convertToUpperCase}" />
+				<!-- <property name="searchSubtree" value="${ldap.searchSubtree}" />
+				<property name="convertToUpperCase" value="${ldap.convertToUpperCase}" /> -->
+				<property name="searchSubtree" value="true" />
+				<property name="convertToUpperCase" value="true" />
 			</bean>
 		</constructor-arg>
 	</bean>
