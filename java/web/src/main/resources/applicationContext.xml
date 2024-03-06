@@ -52,6 +52,7 @@
                 <value>classpath:mapstore-ovr.properties</value>
                 <value>file:${datadir.location:}/geostore-datasource-ovr.properties</value>
                 <value>file:${datadir.location:}/mapstore-ovr.properties</value>
+                <value>classpath:ldap.properties</value>
             </list>
         </property>
     </bean>
