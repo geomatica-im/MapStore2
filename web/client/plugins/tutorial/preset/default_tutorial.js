@@ -50,16 +50,6 @@ export default [
         position: 'top'
     },
     {
-        translation: 'googleEarth', 
-        selector: '#mapstore-sidebar-menu .glyphicon.glyphicon-globe',
-        position: 'top'
-    },
-    {
-        translation: 'searchHistory', 
-        selector: '#mapstore-sidebar-menu .glyphicon.glyphicon-list',
-        position: 'top'
-    },
-    {
         translation: 'burgerMenu',
         selector: '#mapstore-burger-menu'
     },
@@ -81,11 +71,6 @@ export default [
     {
         translation: 'identifyButton',
         selector: '#navigationBar-container .glyphicon.glyphicon-option-horizontal',
-        position: 'top'
-    },
-    {
-        translation: 'overviewmap',
-        selector: '.ol-overviewmap',
         position: 'top'
     },
     {
